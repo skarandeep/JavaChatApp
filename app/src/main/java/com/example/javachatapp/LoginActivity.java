@@ -22,6 +22,7 @@ public class LoginActivity extends AppCompatActivity {
     TextView txtSignUp;
     EditText loginEmail, loginPassword;
     Button btnSignIn;
+    //don't miss instantiating the Firebase authentication
     FirebaseAuth auth;
     //using email regex from StackOverflow
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
@@ -30,6 +31,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        auth = FirebaseAuth.getInstance();
 
         loginEmail = findViewById(R.id.login_email);
         loginPassword = findViewById(R.id.login_password);

@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 public class HomeActivity extends AppCompatActivity {
 
     //adding Firebase authentication
+    //don't miss instantiating the Firebase authentication
     FirebaseAuth auth;
 
     @Override
@@ -17,6 +18,8 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         // getWindow().getDecorView().setBackgroundColor(0xffff0000);
+
+        auth = FirebaseAuth.getInstance();
 
         //check if user is logged in
         if(auth.getCurrentUser() == null){

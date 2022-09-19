@@ -1,6 +1,5 @@
 package com.example.javachatapp;
 
-import androidx.activity.result.contract.ActivityResultContract;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -76,7 +75,7 @@ public class RegistrationActivity extends AppCompatActivity {
                     Toast.makeText(RegistrationActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
                 } else if(!password.equals(confirmPassword)){
                     Toast.makeText(RegistrationActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
-                } else if(password.length()<6){
+                } else if(password.length() < 6){
                     regPassword.setError("Password should be longer than 6 characters");
                     Toast.makeText(RegistrationActivity.this, "Password cannot be less than 6 characters", Toast.LENGTH_SHORT).show();
                 } else {
@@ -117,9 +116,40 @@ public class RegistrationActivity extends AppCompatActivity {
                                                         imageStrURI = uri.toString();
 
                                                         //now we have name, email, password and confirm password as well as image URI resource
+                                                        //Create an Object class Users.java
+                                                        // Ctrl + P to find all variables required in the object class
 
+                                                        Users users = new Users(auth.getUid(), name, email, imageStrURI);
+                                                        reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                            @Override
+                                                            public void onComplete(@NonNull Task<Void> task) {
+                                                                if(task.isSuccessful()){
+                                                                    //if task is successful send user to homepage in chat, short version of intent statement used below
+                                                                    startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
+                                                                } else {
+                                                                    Toast.makeText(RegistrationActivity.this, "Error creating New User", Toast.LENGTH_SHORT).show();
+                                                                }
+                                                            }
+                                                        });
                                                     }
                                                 });
+                                            }
+                                        }
+                                    });
+                                } else {
+                                    //here if user did not select a specific image for their login credentials, assign Firebase default user image (access token)
+
+                                    imageStrURI = "https://firebasestorage.googleapis.com/v0/b/javachatapp-84fb5.appspot.com/o/profile.png?alt=media&token=1cc76bf4-85b7-4a3b-890e-d2cfd2f6b51f";
+
+                                    Users users = new Users(auth.getUid(), name, email, imageStrURI);
+                                    reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if(task.isSuccessful()){
+                                                //if task is successful send user to homepage in chat, short version of intent statement used below
+                                                startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
+                                            } else {
+                                                Toast.makeText(RegistrationActivity.this, "Error creating New User", Toast.LENGTH_SHORT).show();
                                             }
                                         }
                                     });
