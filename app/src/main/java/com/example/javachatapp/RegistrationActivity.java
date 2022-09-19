@@ -96,17 +96,27 @@ public class RegistrationActivity extends AppCompatActivity {
                                 DatabaseReference reference = database.getReference().child("user").child(auth.getUid());
                                 //storage reference
                                 StorageReference storageReference = storage.getReference().child("upload").child(auth.getUid());
+
+                                //if username stored, checking if imageURI is empty or not. if it is null, we add it to storage reference
+
                                 if(imageUri != null){
                                     storageReference.putFile(imageUri).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
                                         @Override
                                         public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
+
+                                            //if uploading the image to database was successful
+                                            //add on success listener instead of listener on TASK
+
                                             if(task.isSuccessful()){
                                                 //TODO OnSuccessListener
                                                 storageReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                                     @Override
                                                     public void onSuccess(Uri uri) {
                                                         //Uri is now listed above
+                                                        //store obtained data into Image String URI variable
                                                         imageStrURI = uri.toString();
+
+                                                        //now we have name, email, password and confirm password as well as image URI resource
 
                                                     }
                                                 });
