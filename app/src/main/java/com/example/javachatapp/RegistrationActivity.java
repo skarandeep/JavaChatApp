@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,6 +40,8 @@ public class RegistrationActivity extends AppCompatActivity {
     FirebaseDatabase database;
     FirebaseStorage storage;
     String imageStrURI;
+    ProgressDialog progressDialogue;
+
 
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
 
@@ -45,6 +49,11 @@ public class RegistrationActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
+
+        progressDialogue = new ProgressDialog(this);
+        progressDialogue.setMessage("Registration underway...");
+        progressDialogue.setCancelable(false);
+
 
         //creating instance of authorization variable and same for database and for storage
         auth = FirebaseAuth.getInstance();
