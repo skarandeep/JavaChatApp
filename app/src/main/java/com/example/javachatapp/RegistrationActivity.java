@@ -71,6 +71,7 @@ public class RegistrationActivity extends AppCompatActivity {
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressDialogue.show();
                 String name = regName.getText().toString();
                 String email = regEmail.getText().toString();
                 String password = regPassword.getText().toString();
@@ -78,13 +79,19 @@ public class RegistrationActivity extends AppCompatActivity {
 
                 //data validation conditions
                 if(TextUtils.isEmpty(name) || TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword)){
+                    //dismiss progress bar when data isn't entered
+                    progressDialogue.dismiss();
                     Toast.makeText(RegistrationActivity.this, "Enter valid data", Toast.LENGTH_SHORT).show();
                 } else if(!email.matches(emailPattern)){
                     regEmail.setError("Please enter valid email");
+                    //dismiss progress bar when data isn't entered
+                    progressDialogue.dismiss();
                     Toast.makeText(RegistrationActivity.this, "Please enter valid email", Toast.LENGTH_SHORT).show();
                 } else if(!password.equals(confirmPassword)){
+                    progressDialogue.dismiss();
                     Toast.makeText(RegistrationActivity.this, "Passwords do not match", Toast.LENGTH_SHORT).show();
                 } else if(password.length() < 6){
+                    progressDialogue.dismiss();
                     regPassword.setError("Password should be longer than 6 characters");
                     Toast.makeText(RegistrationActivity.this, "Password cannot be less than 6 characters", Toast.LENGTH_SHORT).show();
                 } else {
@@ -94,7 +101,7 @@ public class RegistrationActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                               // Toast.makeText(RegistrationActivity.this, "User created successfully", Toast.LENGTH_SHORT).show();
+                                // Toast.makeText(RegistrationActivity.this, "User created successfully", Toast.LENGTH_SHORT).show();
                                 //storing user data in the database
 
                                 //make a database reference utilizing the database instances created at the beginning
@@ -133,6 +140,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
                                                                 if(task.isSuccessful()){
+                                                                    progressDialogue.dismiss();
                                                                     //if task is successful send user to homepage in chat, short version of intent statement used below
                                                                     startActivity(new Intent(RegistrationActivity.this, HomeActivity.class));
                                                                 } else {
@@ -165,6 +173,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                 }
 
                             } else {
+                                progressDialogue.dismiss();
                                 Toast.makeText(RegistrationActivity.this, "Something doesn't feel right!", Toast.LENGTH_SHORT).show();
                             }
                         }

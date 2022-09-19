@@ -3,6 +3,7 @@ package com.example.javachatapp;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -26,6 +27,8 @@ public class LoginActivity extends AppCompatActivity {
     FirebaseAuth auth;
     //using email regex from StackOverflow
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+    // missed progress dialogue in login activity
+    ProgressDialog progressDialogue;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
