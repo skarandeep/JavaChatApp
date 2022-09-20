@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
@@ -39,6 +41,10 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        Users users = usersArrayList.get(position);
+        holder.userName.setText(users.name);
+        holder.userStatus.setText(users.status);
+        Picasso.get().load(users.imageURI).into(holder.userProfile);
 
     }
 
@@ -51,6 +57,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
+
         return usersArrayList.size();
     }
 
@@ -59,9 +66,13 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         CircleImageView userProfile;
         TextView userName, userStatus;
 
-
         public ViewHolder(@NonNull View itemView) {
+
             super(itemView);
+            userProfile = itemView.findViewById(R.id.user_image);
+            userName = itemView.findViewById(R.id.user_name);
+            userStatus = itemView.findViewById(R.id.user_status);
+
         }
     }
 }

@@ -76,6 +76,7 @@ public class RegistrationActivity extends AppCompatActivity {
                 String email = regEmail.getText().toString();
                 String password = regPassword.getText().toString();
                 String confirmPassword = regConfirmPassword.getText().toString();
+                String status = "Hi there, I'm using Java Chat App!";
 
                 //data validation conditions
                 if(TextUtils.isEmpty(name) || TextUtils.isEmpty(password) || TextUtils.isEmpty(confirmPassword)){
@@ -135,7 +136,7 @@ public class RegistrationActivity extends AppCompatActivity {
                                                         //Create an Object class Users.java
                                                         // Ctrl + P to find all variables required in the object class
 
-                                                        Users users = new Users(auth.getUid(), name, email, imageStrURI);
+                                                        Users users = new Users(auth.getUid(), name, email, imageStrURI, status);
                                                         reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                                             @Override
                                                             public void onComplete(@NonNull Task<Void> task) {
@@ -154,11 +155,12 @@ public class RegistrationActivity extends AppCompatActivity {
                                         }
                                     });
                                 } else {
+                                    String status = "Hi there, I'm using Java Chat App!";
                                     //here if user did not select a specific image for their login credentials, assign Firebase default user image (access token)
 
                                     imageStrURI = "https://firebasestorage.googleapis.com/v0/b/javachatapp-84fb5.appspot.com/o/profile.png?alt=media&token=1cc76bf4-85b7-4a3b-890e-d2cfd2f6b51f";
 
-                                    Users users = new Users(auth.getUid(), name, email, imageStrURI);
+                                    Users users = new Users(auth.getUid(), name, email, imageStrURI, status);
                                     reference.setValue(users).addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {

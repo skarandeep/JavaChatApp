@@ -5,20 +5,30 @@ public class Users {
     String name;
     String email;
     String imageURI;
+    String status;
 
     //empty constructor for Firebase
     public Users() {
     }
 
     //Atl + Insert (Windows) to build constructor
-    public Users(String uid, String name, String email, String imageURI) {
+    public Users(String uid, String name, String email, String imageURI, String status) {
         this.uid = uid;
         this.name = name;
         this.email = email;
         this.imageURI = imageURI;
+        this.status = status;
     }
 
     //use Alt + Insert - windows for Getter Setters
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 
     public String getUid() {
         return uid;
