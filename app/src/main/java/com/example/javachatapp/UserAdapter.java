@@ -1,6 +1,7 @@
 package com.example.javachatapp;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,6 +46,21 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.ViewHolder> {
         holder.userName.setText(users.name);
         holder.userStatus.setText(users.status);
         Picasso.get().load(users.imageURI).into(holder.userProfile);
+
+        //itemView here includes the whole user card on the chat pane
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(homeActivity,ChatActivity.class);
+                // need to specify further coz we're inside an adapter right now
+                intent.putExtra("name", users.getName());
+                intent.putExtra("receiver image", users.getImageURI());
+                intent.putExtra("uid", users.getUid());
+                //now lets go to ChatActivity and make changes
+
+                homeActivity.startActivity(intent);
+            }
+        });
 
     }
 
