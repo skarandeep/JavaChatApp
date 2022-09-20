@@ -1,7 +1,11 @@
 package com.example.javachatapp;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
     FirebaseDatabase database;
     //arrayList to store the data fetched from firebase database
     ArrayList<Users> usersArrayList;
+    ImageView imgLogout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +71,47 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        imgLogout = findViewById(R.id.img_logout);
+
         userRecyclerView = findViewById(R.id.recycler_user_main);
         userRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         //making new adapter
         UserAdapter adapter = new UserAdapter(HomeActivity.this, usersArrayList);
         userRecyclerView.setAdapter(userAdapter);
+
+        //listener for Logout imageView
+        imgLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //inserting Logout dialogue here, after preparing a specific theme
+                Dialog dialog = new Dialog(HomeActivity.this,R.style.Dialogue);
+                //create a new layout for dialog
+                dialog.setContentView(R.layout.dialog_layout);
+
+                //after creating the dialog layout
+                TextView btnYes, btnNo;
+                btnNo = dialog.findViewById(R.id.btn_no);
+                btnYes = dialog.findViewById(R.id.btn_yes);
+
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        FirebaseAuth.getInstance().signOut();
+                        startActivity(new Intent(HomeActivity.this, RegistrationActivity.class));
+                    }
+                });
+
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                dialog.show();
+            }
+        });
+
 
         //check if user is logged in
         if(auth.getCurrentUser() == null){
